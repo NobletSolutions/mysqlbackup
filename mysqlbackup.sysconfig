@@ -1,0 +1,4 @@
+BACKUP_DIR="/srv/backup"
+MYSQLDUMP="/usr/bin/mysqldump"
+MYSQL="/usr/bin/mysql"
+MY_CNF_FILE=/etc/mysqlbackup/my.cnf

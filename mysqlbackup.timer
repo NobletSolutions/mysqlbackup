@@ -1,0 +1,12 @@
+[Unit]
+Description=Mysql Backup Timer
+Requires=mysqlbackup.service
+
+[Timer]
+Unit=mysqlbackup.service
+#OnBootSec=5min
+#OnUnitActiveSec=1h
+OnCalendar=hourly
+
+[Install]
+WantedBy=multi-user.target

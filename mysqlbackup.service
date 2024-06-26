@@ -1,0 +1,12 @@
+[Unit]
+Description=Backup Databases
+Wants=mysqlbackup.timer
+
+[Service]
+WorkingDirectory=/srv/backup
+Type=oneshot
+ExecStart=/usr/sbin/mysqlbackup
+EnvironmentFile=/etc/sysconfig/mysqlbackup
+
+[Install]
+WantedBy=multi-user.target
