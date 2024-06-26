@@ -46,3 +46,4 @@ The script will have the following environment variables it can use
 | MY_CNF_FILE  | Full path to the my.cnf file for credentials |
 | LATEST_DIR   | Full path to the current backup directory    |
 | PREVIOUS_DIR | Full path to the previous backup directory   |
+
