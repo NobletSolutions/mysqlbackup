@@ -1,6 +1,6 @@
 
 NAME	= mysqlbackup
-VERSION	= 1.0.0
+VERSION	= 1.0.1
 
 #
 #	Command to remove files, copy files and create directories.
@@ -37,4 +37,3 @@ uninstall:
 dist: 
 	tar --exclude-vcs-ignores --exclude-vcs --exclude=*tar.bz2 --transform 's,^\.,${NAME}-${VERSION},' -cjf ../${NAME}-${VERSION}.tar.bz2 .
 	cp ../${NAME}-${VERSION}.tar.bz2 .
-

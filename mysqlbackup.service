@@ -1,12 +1,13 @@
 [Unit]
-Description=Backup Databases
+Description=Backup Mysql Databases Service
 Wants=mysqlbackup.timer
 
 [Service]
-WorkingDirectory=/srv/backup
+EnvironmentFile=/etc/sysconfig/mysqlbackup
+PassEnvironment=BACKUP_DIR MY_CNF_FILE MYSQLDUMP MYSQL
+WorkingDirectory=/srv
 Type=oneshot
 ExecStart=/usr/sbin/mysqlbackup
-EnvironmentFile=/etc/sysconfig/mysqlbackup
 
 [Install]
 WantedBy=multi-user.target

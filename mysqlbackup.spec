@@ -1,5 +1,5 @@
 Name:           mysqlbackup
-Version:        1.0.0
+Version:        1.0.1
 Release:        1%{?dist}
 Summary:        Scripts, config and timers for backing up a DB
 
