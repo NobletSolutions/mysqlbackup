@@ -1,6 +1,6 @@
 
 NAME	= mysqlbackup
-VERSION	= 1.0.1
+VERSION	= 1.0.2
 
 #
 #	Command to remove files, copy files and create directories.
