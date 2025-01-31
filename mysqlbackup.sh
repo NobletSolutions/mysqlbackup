@@ -9,6 +9,9 @@ if [[ -z "$BACKUP_DIR" || -z "$MYSQL" || -z "$MYSQLDUMP" || -z "$MY_CNF_FILE" ]]
     exit 1;
 fi
 
+# Used to add --master-data for binlog enabled servers
+USER_ARGS=${BACKUP_ADDITIONAL_ARGS:-}
+
 # ensure the configured directory has necessary sub directories
 mkdir -p $BACKUP_DIR/mysql/{latest,previous}
 
@@ -27,18 +30,19 @@ date > $LATEST_DIR/time-start.txt;
 # dump each database in turn
 for db in $databases; do
     echo "Backing up $db schema without data"
-    $MYSQLDUMP --defaults-extra-file=$MY_CNF_FILE --force --opt --events --routines --flush-logs --single-transaction --master-data=1 --no-data $db > "$LATEST_DIR/$db-schema.sql"
+    $MYSQLDUMP --defaults-extra-file=$MY_CNF_FILE --force --opt --events --routines --flush-logs --single-transaction $USER_ARGS --no-data $db > "$LATEST_DIR/$db-schema.sql"
     echo "Compressing $db-schema.sql"
     nice -n 5 pbzip2 -p4 $LATEST_DIR/$db-schema.sql
 
     echo "Backing up $db data"
-    $MYSQLDUMP --defaults-extra-file=$MY_CNF_FILE --force --opt --flush-logs --single-transaction --master-data=1 --no-create-info --no-create-db $db > "$LATEST_DIR/$db-data.sql"
+    $MYSQLDUMP --defaults-extra-file=$MY_CNF_FILE --force --opt --flush-logs --single-transaction $USER_ARGS --no-create-info --no-create-db $db > "$LATEST_DIR/$db-data.sql"
     echo "Compressing $db"
     nice -n 5 pbzip2 -p5 $LATEST_DIR/$db-data.sql
 done
 
+filenames=$(ls /etc/mysqlbackup.d/*.sh 2> /dev/null)
 # execute additional custom scripts
-for filename in /etc/mysqlbackup.d/*.sh; do
+for filename in $filenames; do
     echo "Running $filename";
     $($filename)
     if [[ $? -ne 0 ]]; then

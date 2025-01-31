@@ -2,3 +2,5 @@ BACKUP_DIR="/srv/backup"
 MYSQLDUMP="/usr/bin/mysqldump"
 MYSQL="/usr/bin/mysql"
 MY_CNF_FILE=/etc/mysqlbackup/my.cnf
+#If using binlogs 
+#BACKUP_ADDITIONAL_ARGS=--master-data=1
